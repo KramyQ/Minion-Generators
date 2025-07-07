@@ -14,11 +14,12 @@ import me.kryniowesegryderiusz.kgenerators.api.events.PreGeneratorRegenerationEv
 import me.kryniowesegryderiusz.kgenerators.api.objects.AbstractGeneratedObject;
 import me.kryniowesegryderiusz.kgenerators.generators.locations.objects.GeneratorLocation;
 import me.kryniowesegryderiusz.kgenerators.logger.Logger;
-import me.kryniowesegryderiusz.kgenerators.xseries.XMaterial;
+import com.cryptomorin.xseries.XMaterial;
 
 public class GeneratorLocationRegenerateHandler {
 
-    static Material pistonHead = XMaterial.PISTON_HEAD.parseMaterial();
+    static Material pistonHead = XMaterial.PISTON_HEAD.get();
+	static Material pistonMoving = XMaterial.MOVING_PISTON.get();
 
     public void handle(GeneratorLocation gLocation) {
 
@@ -34,7 +35,7 @@ public class GeneratorLocationRegenerateHandler {
         Location generatingLocation = gLocation.getGeneratedBlockLocation();
         Block generatingLocationBlock = generatingLocation.getBlock();
 
-        if (generatingLocationBlock.getType() == pistonHead) {
+        if (generatingLocationBlock.getType() == pistonHead || generatingLocationBlock.getType() == pistonMoving) {
             gLocation.scheduleGeneratorRegeneration();
             return;
         }
@@ -44,7 +45,7 @@ public class GeneratorLocationRegenerateHandler {
         boolean isPlaceholder = gLocation.getGenerator().getPlaceholder() == null ? isAir : gLocation.getGenerator().getPlaceholder().getItem().equals(Main.getMultiVersion().getBlocksUtils().getItemStackByBlock(generatingLocationBlock));
 
         if (!isAir && !isOnWhitelist && !isPlaceholder) {
-            Logger.debugPlacedGeneratorsManager("GeneratorLocationRegenerateHandler: Dropping generator " + gLocation.toString() + " | isAir: " + isAir + " | isOnWhitelist: " + isOnWhitelist + " | isPlaceholder: " + isPlaceholder);
+            Logger.debug("GeneratorLocationRegenerateHandler: Dropping generator " + gLocation.toString() + " | isAir: " + isAir + " | isOnWhitelist: " + isOnWhitelist + " | isPlaceholder: " + isPlaceholder + " | block: " + generatingLocationBlock.getType().toString());
             gLocation.removeGenerator(true, null);
             return;
         }

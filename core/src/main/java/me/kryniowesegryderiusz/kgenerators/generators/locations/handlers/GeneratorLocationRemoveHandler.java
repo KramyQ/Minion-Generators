@@ -3,6 +3,7 @@ package me.kryniowesegryderiusz.kgenerators.generators.locations.handlers;
 import javax.annotation.Nullable;
 
 import org.bukkit.Location;
+import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
@@ -11,10 +12,10 @@ import me.kryniowesegryderiusz.kgenerators.Main;
 import me.kryniowesegryderiusz.kgenerators.api.events.GeneratorRemoveEvent;
 import me.kryniowesegryderiusz.kgenerators.dependencies.enums.Dependency;
 import me.kryniowesegryderiusz.kgenerators.dependencies.hooks.ItemsAdderHook;
+import me.kryniowesegryderiusz.kgenerators.dependencies.hooks.SuperiorSkyblock2Hook;
 import me.kryniowesegryderiusz.kgenerators.generators.generator.objects.Generator;
 import me.kryniowesegryderiusz.kgenerators.generators.locations.objects.GeneratorLocation;
 import me.kryniowesegryderiusz.kgenerators.utils.PlayerUtils;
-import me.kryniowesegryderiusz.kgenerators.xseries.XMaterial;
 
 public class GeneratorLocationRemoveHandler {
 	
@@ -36,7 +37,6 @@ public class GeneratorLocationRemoveHandler {
 		
 		if (drop) {
 			PlayerUtils.dropToInventory(Main.getSettings().isPickUpToEq() ? toWho : null, location, generatorItem);
-				
 		}
 		
 		if (Main.getDependencies().isEnabled(Dependency.ITEMS_ADDER)) {
@@ -45,9 +45,12 @@ public class GeneratorLocationRemoveHandler {
 				cb.remove();
 		}
 		
-		Main.getMultiVersion().getBlocksUtils().setBlock(location, XMaterial.AIR);
-		Main.getMultiVersion().getBlocksUtils().setBlock(gLocation.getGeneratedBlockLocation(), XMaterial.AIR);
+		SuperiorSkyblock2Hook.handleGeneratorLocationRemove(gLocation);
+		
+		Main.getMultiVersion().getBlocksUtils().setBlock(location, Material.AIR);
+		Main.getMultiVersion().getBlocksUtils().setBlock(gLocation.getGeneratedBlockLocation(), Material.AIR);
 		
 		ItemsAdderHook.handleGeneratorLocationRemove(gLocation);
+		
 	}
 }

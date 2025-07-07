@@ -5,6 +5,7 @@ import java.util.Arrays;
 import java.util.NoSuchElementException;
 import java.util.Optional;
 
+import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
@@ -13,10 +14,10 @@ import me.kryniowesegryderiusz.kgenerators.dependencies.hooks.EcoItemsHook;
 import me.kryniowesegryderiusz.kgenerators.dependencies.hooks.ItemsAdderHook;
 import me.kryniowesegryderiusz.kgenerators.dependencies.hooks.MMOItemsHook;
 import me.kryniowesegryderiusz.kgenerators.dependencies.hooks.MythicMobsHook;
+import me.kryniowesegryderiusz.kgenerators.dependencies.hooks.NexoHook;
 import me.kryniowesegryderiusz.kgenerators.dependencies.hooks.OraxenHook;
 import me.kryniowesegryderiusz.kgenerators.logger.Logger;
-import me.kryniowesegryderiusz.kgenerators.utils.immutable.PlayerHeadUtils;
-import me.kryniowesegryderiusz.kgenerators.xseries.XMaterial;
+import com.cryptomorin.xseries.XMaterial;
 
 public abstract class ItemUtils {
 	
@@ -28,8 +29,8 @@ public abstract class ItemUtils {
         			&& Main.getGenerators().exists(splitted[1]))
         		return Main.getGenerators().get(splitted[1]).getGeneratorItem().clone();
         	else if (splitted[0].equals("customhead")
-        			&& PlayerHeadUtils.itemFromBase64(splitted[1]) != null)
-        		return PlayerHeadUtils.itemFromBase64(splitted[1]);
+        			&& Main.getMultiVersion().getSkullUtils().itemFromBase64(splitted[1]) != null)
+        		return Main.getMultiVersion().getSkullUtils().itemFromBase64(splitted[1]);
         	else if (splitted[0].equals("itemsadder")
         			&& ItemsAdderHook.getItemStack(splitted[1]) != null)
         		return ItemsAdderHook.getItemStack(splitted[1]);
@@ -39,6 +40,9 @@ public abstract class ItemUtils {
         	else if (splitted[0].equals("oraxen")
         			&& OraxenHook.getItemStack(splitted[1]) != null)
         		return OraxenHook.getItemStack(splitted[1]);
+        	else if (splitted[0].equals("nexo")
+        			&& NexoHook.exists(splitted[1]))
+        		return NexoHook.getItemStack(splitted[1]);
         	else if (splitted[0].equals("mmoitems")
         			&& MMOItemsHook.getItemStack(splitted[1]) != null)
         		return MMOItemsHook.getItemStack(splitted[1]);
@@ -54,7 +58,7 @@ public abstract class ItemUtils {
 		Optional<XMaterial> oxm = XMaterial.matchXMaterial(material);
 		try {
 			XMaterial xm = oxm.get();
-			if (isBlockCheck && !xm.parseMaterial().isBlock()) {
+			if (isBlockCheck && !xm.get().isBlock()) {
 				Logger.error(place + ": " + material + " is not a block! Using STONE!");
 				return XMaterial.STONE;
 			}
@@ -113,5 +117,28 @@ public abstract class ItemUtils {
 		item.setItemMeta(meta);
 		
 		return item;
+	}
+	
+	public static ItemStack getItemStackFromMaterial(Material m) {
+		return getItemStackFromMaterial(XMaterial.matchXMaterial(m));
+	}
+
+	public static ItemStack getItemStackFromMaterial(XMaterial xm) {
+		
+		if (xm == null) 
+			return XMaterial.AIR.parseItem();
+		else if (xm == XMaterial.CARROTS)
+			return XMaterial.CARROT.parseItem();
+		else if (xm == XMaterial.POTATOES)
+			return XMaterial.POTATO.parseItem();
+		else if (xm == XMaterial.BEETROOTS)
+			return XMaterial.BEETROOT.parseItem();
+		else if (xm == XMaterial.PUMPKIN_STEM)
+			return XMaterial.PUMPKIN_SEEDS.parseItem();
+		else if (xm == XMaterial.MELON_STEM)
+			return XMaterial.MELON_SEEDS.parseItem();
+		else
+			return xm.parseItem();
+
 	}
 }

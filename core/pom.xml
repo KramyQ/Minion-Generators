@@ -47,12 +47,6 @@
 			<url>https://repo.bg-software.com/repository/api/</url>
 		</repository>
 
-		<!-- GameProfile -->
-		<repository>
-			<id>authlib</id>
-			<url>https://papermc.io/repo/repository/maven-releases/</url>
-		</repository>
-
 		<!-- PlaceholderAPI -->
 		<repository>
 			<id>placeholderapi</id>
@@ -74,6 +68,31 @@
 			<url>https://ci.ender.zone/plugin/repository/everything/</url>
 		</repository>
 
+		<!-- IridiumSkyblock -->
+		<repository>
+			<id>iridiumdevelopment</id>
+			<url>https://nexus.iridiumdevelopment.net/repository/maven-releases/</url>
+		</repository>
+
+		<!-- NexoMC -->
+		<repository>
+			<id>nexo</id>
+			<url>https://repo.nexomc.com/releases</url>
+		</repository>
+
+		<!-- PlayerPoints -->
+		<repository>
+			<id>rosewood-repo</id>
+			<url>https://repo.rosewooddev.io/repository/public/</url>
+		</repository>
+
+		<!-- Fancy Holograms -->
+		<repository>
+			<id>fancyplugins-releases</id>
+			<name>FancyPlugins Repository</name>
+			<url>https://repo.fancyplugins.de/releases</url>
+		</repository>
+
 		<repository>
 			<id>phoenix</id>
 			<url>https://nexus.phoenixdevt.fr/repository/maven-public/</url>
@@ -86,13 +105,13 @@
 
 	</repositories>
 
+
 	<dependencyManagement>
 		<dependencies>
-			<!-- PltoSquared -->
 			<dependency>
 				<groupId>com.intellectualsites.bom</groupId>
 				<artifactId>bom-newest</artifactId>
-				<version>1.39</version>
+				<version>1.47</version>
 				<scope>import</scope>
 				<type>pom</type>
 			</dependency>
@@ -100,6 +119,20 @@
 	</dependencyManagement>
 
 	<dependencies>
+
+		<!-- NBT-API -->
+		<dependency>
+			<groupId>de.tr7zw</groupId>
+			<artifactId>item-nbt-api</artifactId>
+			<version>2.15.0</version>
+		</dependency>
+
+		<!-- XSeries -->
+		<dependency>
+			<groupId>com.github.cryptomorin</groupId>
+			<artifactId>XSeries</artifactId>
+			<version>13.2.0</version>
+		</dependency>
 
 		<!--This adds the Spigot API artifact to the build -->
 		<dependency>
@@ -167,7 +200,7 @@
 		<dependency>
 			<groupId>com.github.MilkBowl</groupId>
 			<artifactId>VaultAPI</artifactId>
-			<version>1.7</version>
+			<version>1.7.1</version>
 			<scope>provided</scope>
 		</dependency>
 
@@ -182,12 +215,11 @@
 		<!-- IridiumSkyblock -->
 		<dependency>
 			<groupId>com.iridium</groupId>
-			<artifactId>iridiumskyblock</artifactId>
-			<version>3.0.7</version>
-			<scope>system</scope>
-			<systemPath>${project.basedir}/libs/IridiumSkyblock-3.2.8.jar</systemPath>
+			<artifactId>IridiumSkyblock</artifactId>
+			<version>4.0.9.1</version>
 		</dependency>
 
+		<!-- DecentHolograms -->
 		<dependency>
 			<groupId>com.github.decentsoftware-eu</groupId>
 			<artifactId>decentholograms</artifactId>
@@ -199,7 +231,7 @@
 		<dependency>
 			<groupId>com.github.LoneDev6</groupId>
 			<artifactId>api-itemsadder</artifactId>
-			<version>3.0.0</version>
+			<version>3.6.1</version>
 			<scope>provided</scope>
 		</dependency>
 
@@ -217,13 +249,6 @@
 			<version>3.46.0</version>
 			<scope>system</scope>
 			<systemPath>${project.basedir}/libs/eco-6.35.1-all.jar</systemPath>
-		</dependency>
-
-		<!-- NBT-API -->
-		<dependency>
-			<groupId>de.tr7zw</groupId>
-			<artifactId>item-nbt-api</artifactId>
-			<version>2.13.1</version>
 		</dependency>
 
 		<!-- WorldEdit -->
@@ -301,14 +326,6 @@
 			<version>3.7.0</version>
 		</dependency>
 
-		<!-- GameProfile -->
-		<dependency>
-			<groupId>com.mojang</groupId>
-			<artifactId>authlib</artifactId>
-			<version>1.5.25</version>
-			<scope>provided</scope>
-		</dependency>
-
 		<!-- CMI -->
 		<dependency>
 			<groupId>com.zrips</groupId>
@@ -362,7 +379,7 @@
 		<dependency>
 			<groupId>com.github.WaterArchery</groupId>
 			<artifactId>LitMinionsAPI</artifactId>
-			<version>2.34</version>
+			<version>3.1.7</version>
 		</dependency>
 
 		<!-- PlotSquared -->
@@ -392,7 +409,6 @@
 			<scope>provided</scope>
 		</dependency>
 
-
 		<!-- MythicMobs -->
 		<dependency>
 			<groupId>io.lumine</groupId>
@@ -406,6 +422,37 @@
 			<groupId>com.massivecraft</groupId>
 			<artifactId>Factions</artifactId>
 			<version>1.6.9.5-U0.6.33</version>
+			<scope>provided</scope>
+		</dependency>
+
+		<!-- NexoMC -->
+		<dependency>
+			<groupId>com.nexomc</groupId>
+			<artifactId>nexo</artifactId>
+			<version>0.5.0</version>
+			<classifier>dev</classifier>
+			<scope>provided</scope>
+			<exclusions>
+				<exclusion>
+					<groupId>net.byteflux</groupId>
+					<artifactId>libby-bukkit</artifactId>
+				</exclusion>
+			</exclusions>
+		</dependency>
+
+		<!-- PlayerPoints -->
+		<dependency>
+			<groupId>org.black_ixx</groupId>
+			<artifactId>playerpoints</artifactId>
+			<version>3.3.0</version>
+			<scope>provided</scope>
+		</dependency>
+
+		<!-- FancyHolograms -->
+		<dependency>
+			<groupId>de.oliver</groupId>
+			<artifactId>FancyHolograms</artifactId>
+			<version>2.4.1</version>
 			<scope>provided</scope>
 		</dependency>
 
@@ -447,7 +494,7 @@
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-shade-plugin</artifactId>
-				<version>3.3.0</version>
+				<version>3.6.0</version>
 				<executions>
 					<execution>
 						<id>shade</id>
@@ -458,20 +505,26 @@
 					</execution>
 				</executions>
 				<configuration>
+					<artifactSet>
+						<includes>
+							<include>de.tr7zw:*</include>
+							<include>com.zaxxer:*</include>
+							<include>org.slf4j:*</include>
+							<include>com.github.cryptomorin:*</include>
+						</includes>
+					</artifactSet>
 					<relocations>
 						<relocation>
 							<pattern>de.tr7zw.changeme.nbtapi</pattern>
 							<shadedPattern>
 								me.kryniowesegryderiusz.kgenerators.dependencies.shaded.nbtapi</shadedPattern>
 						</relocation>
+						<relocation>
+							<pattern>com.cryptomorin.xseries</pattern>
+							<shadedPattern>
+								me.kryniowesegryderiusz.kgenerators.dependencies.shaded.xseries</shadedPattern>
+						</relocation>
 					</relocations>
-					<artifactSet>
-						<includes>
-							<include>de.tr7zw:*</include>
-							<include>com.zaxxer:*</include>
-							<include>org.slf4j:*</include>
-						</includes>
-					</artifactSet>
 				</configuration>
 			</plugin>
 		</plugins>

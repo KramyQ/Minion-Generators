@@ -4,7 +4,10 @@ import java.util.ArrayList;
 import java.util.Map;
 import java.util.concurrent.ThreadLocalRandom;
 
+import javax.annotation.Nullable;
+
 import org.bukkit.Location;
+import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.inventory.ItemStack;
@@ -15,8 +18,7 @@ import me.kryniowesegryderiusz.kgenerators.dependencies.enums.Dependency;
 import me.kryniowesegryderiusz.kgenerators.dependencies.hooks.VaultHook;
 import me.kryniowesegryderiusz.kgenerators.utils.FilesUtils;
 import me.kryniowesegryderiusz.kgenerators.utils.PlayerUtils;
-import me.kryniowesegryderiusz.kgenerators.xseries.XEnchantment;
-import me.kryniowesegryderiusz.kgenerators.xseries.XMaterial;
+import com.cryptomorin.xseries.XEnchantment;
 
 public class CustomDrops {
 
@@ -66,16 +68,15 @@ public class CustomDrops {
 		} else
 			return false;
 	}
-
-	private void doCustomDrops(Player p, Location location) {
-
+	
+	public void doItemDrops(@Nullable Player p, Location location) {
 		if (this.item != null) {
 			ItemStack is = this.item.clone();
 
-			if (this.itemFortune) {
+			if (p != null && this.itemFortune) {
 				int level = 0;
 				if (p.getInventory().getItemInMainHand() != null)
-					level = p.getInventory().getItemInMainHand().getEnchantmentLevel(XEnchantment.FORTUNE.getEnchant());
+					level = p.getInventory().getItemInMainHand().getEnchantmentLevel(XEnchantment.FORTUNE.get());
 				if (level > 0) {
 					int randomNum = ThreadLocalRandom.current().nextInt(1, level + 2);
 					is.setAmount(randomNum);
@@ -85,42 +86,22 @@ public class CustomDrops {
 			PlayerUtils.dropBlockToInventory(p, location, is);
 
 		}
-
-		if (this.money > 0.0 && Main.getDependencies().isEnabled(Dependency.VAULT_ECONOMY)) {
+	}
+	
+	public void doMoneyDrops(Player p) {
+		if (p != null && this.money > 0.0 && Main.getDependencies().isEnabled(Dependency.VAULT_ECONOMY)) {
 			VaultHook.giveMoney(p, money);
 		}
-
+	}
+	
+	public void doCommandDrops(String playerName, Location location) {
 		if (!this.commands.isEmpty()) {
 			for (String cmd : this.commands) {
 				cmd = CoordControl(cmd, location, "<x");
 				cmd = CoordControl(cmd, location, "<y");
 				cmd = CoordControl(cmd, location, "<z");
-				Main.getInstance().getServer().dispatchCommand(Main.getInstance().getServer().getConsoleSender(), cmd.replace("<player>", p.getName()));
+				Main.getInstance().getServer().dispatchCommand(Main.getInstance().getServer().getConsoleSender(), cmd.replace("<player>", playerName));
 			}
-		}
-	}
-
-	public String CoordControl(String cmd, Location loc, String coord){
-		double coordValue = getCoordVal(coord, loc);
-		if(cmd.contains(coord)) {
-			String[] split = cmd.split(coord);
-			String[] split2 = split[1].split(">");
-			if (cmd.contains(coord + "-")||cmd.contains(coord + "+"))
-				return cmd.replace((coord + split2[0] + ">"), String.valueOf(coordValue + Double.parseDouble(split2[0])));
-		}
-		return cmd.replace(coord + ">", String.valueOf(coordValue));
-	}
-
-	public double getCoordVal(String coord, Location loc) {
-		switch (coord) {
-			case "<x":
-				return (loc.getX()+0.5);
-			case "<y":
-				return (loc.getY()+1);
-			case "<z":
-				return (loc.getZ()+0.5);
-			default:
-				return 0;
 		}
 	}
 
@@ -147,7 +128,7 @@ public class CustomDrops {
 		if (this.removeDefaults) {
 			if (Main.getMultiVersion().isHigher(11)) e.setDropItems(false);
 			else {
-				Main.getMultiVersion().getBlocksUtils().setBlock(e.getBlock().getLocation(), XMaterial.AIR);
+				Main.getMultiVersion().getBlocksUtils().setBlock(e.getBlock().getLocation(), Material.AIR);
 				e.setCancelled(true);
 			}
 		}
@@ -156,7 +137,11 @@ public class CustomDrops {
 		 * Other
 		 */
 
-		this.doCustomDrops(e.getPlayer(), e.getBlock().getLocation());
+		this.doItemDrops(e.getPlayer(), e.getBlock().getLocation());
+
+		this.doMoneyDrops(e.getPlayer());
+		
+		this.doCommandDrops(e.getPlayer().getName(), e.getBlock().getLocation());
 	}
 
 	public String toString() {
@@ -167,6 +152,34 @@ public class CustomDrops {
 		if (this.exp > 0) s += ", Exp: " + this.exp;
 		if (!this.commands.isEmpty()) s += ", Commands: " + this.commands;
 		return s;
+	}
+	
+	/*
+	 * CoordControl
+	 */
+	
+	public String CoordControl(String cmd, Location loc, String coord){
+		double coordValue = getCoordVal(coord, loc);
+		if(cmd.contains(coord)) {
+			String[] split = cmd.split(coord);
+			String[] split2 = split[1].split(">");
+			if (cmd.contains(coord + "-")||cmd.contains(coord + "+"))
+				return cmd.replace((coord + split2[0] + ">"), String.valueOf(coordValue + Double.parseDouble(split2[0])));
+		}
+		return cmd.replace(coord + ">", String.valueOf(coordValue));
+	}
+
+	public double getCoordVal(String coord, Location loc) {
+		switch (coord) {
+			case "<x":
+				return (loc.getX()+0.5);
+			case "<y":
+				return (loc.getY()+1);
+			case "<z":
+				return (loc.getZ()+0.5);
+			default:
+				return 0;
+		}
 	}
 
 }

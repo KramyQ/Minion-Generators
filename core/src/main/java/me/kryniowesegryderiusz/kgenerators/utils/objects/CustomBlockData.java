@@ -6,7 +6,7 @@ import org.bukkit.inventory.ItemStack;
 import lombok.Getter;
 import me.kryniowesegryderiusz.kgenerators.Main;
 import me.kryniowesegryderiusz.kgenerators.utils.ItemUtils;
-import me.kryniowesegryderiusz.kgenerators.xseries.XMaterial;
+import com.cryptomorin.xseries.XMaterial;
 
 public class CustomBlockData {
 
@@ -17,15 +17,15 @@ public class CustomBlockData {
 	}
 	
 	public void setBlock(Location location) {
-		Main.getMultiVersion().getBlocksUtils().setBlock(location, xMaterial);
+		Main.getMultiVersion().getBlocksUtils().setBlock(location, xMaterial.get());
 	}
 	
 	public void setBlock(Location location, boolean physics) {
-		Main.getMultiVersion().getBlocksUtils().setBlock(location, xMaterial, physics);
+		Main.getMultiVersion().getBlocksUtils().setBlock(location, xMaterial.get(), physics);
 	}
 	
 	public ItemStack getItem() {
-		return this.xMaterial.parseItem();
+		return ItemUtils.getItemStackFromMaterial(xMaterial);
 	}
 	
 	public String toString() {
@@ -44,8 +44,9 @@ public class CustomBlockData {
 	public static CustomBlockData load(String configString, String place) {
 		if (configString.contains(":")) {
 			String[] splitted = configString.split(":");
-			if (splitted[0].contains("customhead"))
+			if (splitted[0].contains("customhead")) {
 				return new HeadCustomBlockData(XMaterial.PLAYER_HEAD, splitted[1]);
+			}
 		}
 		
 		return new CustomBlockData(ItemUtils.getXMaterial(configString, place+" CustomBlockData:", true));

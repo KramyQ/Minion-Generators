@@ -11,7 +11,7 @@ generator:
   time-left:
     enabled: true
     item: CLOCK
-    name: §aThời gian còn lại để tái tạo
+    name: §a生成剩余时间
     lore:
     - §a<time>
     slots: '21'
@@ -19,7 +19,7 @@ generator:
   owner:
     enabled: true
     item: BOOK
-    name: §aChủ máy tái tạo
+    name: §a生成器拥有者
     lore:
     - §e<owner>
     slots: '22'
@@ -27,51 +27,51 @@ generator:
   pick-up:
     enabled: true
     item: BARRIER
-    name: §aLấy lại
+    name: §a拾起生成器
     lore:
-    - §eNhấn để lấy lại máy
+    - §e点此拾起生成器
     slots: '23'
     glow: false
   quit:
     enabled: true
     item: ARROW
-    name: §cThoát
+    name: §c退出
     lore:
-    - §6Thoát menu
+    - §6关闭本界面
     slots: '40'
     glow: false
   reset:
     enabled: true
     item: MUSIC_DISC_11
-    name: §cReset máy tái tạo
+    name: §c重置生成器
     lore:
-    - §6Máy tái tạo này dường như bị hỏng!
-    - §6Nhấn để sửa chữa
+    - §6这个生成器像是坏掉了!
+    - §6点此将其修复
     slots: '13'
     glow: false
   upgrade:
     enabled: true
     item: EXPERIENCE_BOTTLE
-    name: §cNâng cấp máy tái tạo
+    name: §c升级生成器
     lore:
-    - §6Nhấn để nâng cấp máy tái tạo!
+    - §6点此升级生成器!
     - ''
-    - '§6Lần nâng cấp tiếp theo: §e<next_generator>'
-    - '§6Giá trị:'
+    - '§6下一阶段: §e<next_generator>'
+    - '§6升级费用:'
     - <costs>
     slots: '31'
     glow: false
   upgrade-maxed:
     enabled: true
     item: EXPERIENCE_BOTTLE
-    name: §cMáy tại tạo ở mức tối đa
+    name: §c生成器已满级
     lore:
-    - §6Máy tại tạo của bạn đã đạt
-    - §6mức tối đa để nâng cấp
+    - §6生成器已经满级, 没有下一等级!
+    - §a你不需要为其升级了!
     slots: '31'
     glow: false
 main:
-  name: §9Generators
+  name: §9生成器
   slots: 45
   filler:
     enabled: true
@@ -85,47 +85,45 @@ main:
     item: <generator>
     name: §a<generator_name>
     lore:
-    - '§6Chuột trái:'
-    - §eKiểm tra xem máy tái tạo cái gì
+    - '§6左键:'
+    - §e浏览生成物品
     slots: 9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35
     glow: false
   limits:
     enabled: true
     item: PLAYER_HEAD
-    name: §aGiới hạn
+    name: §a限制
     lore:
-    - §eNhấn để kiểm tra giới hạn
+    - §e点此浏览限制
     slots: '8'
     glow: false
   quit:
     enabled: true
     item: BARRIER
-    name: §cThoát
+    name: §c退出
     lore:
-    - §6Thoát khỏi menu
+    - §6离开本界面
     slots: '40'
     glow: false
   page:
     previous:
       enabled: true
       item: ARROW
-      name: §cTrang trước
+      name: §c上一页
       lore:
-      - §6Nhấn để trở lại
-      - §6trang trước đó
+      - §6点击返回上一页
       slots: '38'
       glow: false
     next:
       enabled: true
       item: ARROW
-      name: §cTrang sau
+      name: §c下一页
       lore:
-      - §6Nhấn để chuyển
-      - §6sang trang sau
+      - §6点击前往下一页
       slots: '42'
       glow: false
 generated-objects:
-  name: '§9Tái tạo:'
+  name: '§9生成内容:'
   slots: 45
   filler:
     enabled: true
@@ -142,21 +140,20 @@ generated-objects:
     - <generated_object_lore>
     - ''
     - <generated_object_type>
-    - '§6Tỉ lệ: §e<chance>%'
+    - '§6几率: §e<chance>%'
     - <generated_object_custom_drops>
     slots: 9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35
     glow: false
   back:
     enabled: true
     item: ARROW
-    name: §cTrở lại
+    name: §c返回
     lore:
-    - §6Quay lại danh
-    - §6sách máy tái tạo
+    - §6回到&c生成器列表
     slots: '40'
     glow: false
 recipe:
-  name: §9Công thức
+  name: §9配方
   slots: 45
   filler:
     enabled: true
@@ -182,21 +179,20 @@ recipe:
   marker:
     enabled: true
     item: CRAFTING_TABLE
-    name: §aChế tạo
+    name: §a合成
     lore: []
     slots: 14,23,32
     glow: false
   back:
     enabled: true
     item: ARROW
-    name: §cTrở lại
+    name: §c返回
     lore:
-    - §6Quay lại danh
-    - §6sách máy tái tạo
+    - §6回到&c生成器列表
     slots: '40'
     glow: false
 upgrade:
-  name: §9Nâng cấp
+  name: §9升级
   slots: 45
   filler:
     enabled: true
@@ -222,28 +218,26 @@ upgrade:
   marker:
     enabled: true
     item: EXPERIENCE_BOTTLE
-    name: §aNâng cấp
+    name: §a升级
     lore:
-    - §6Để nâng cấp máy tái
-    - §6tạo thì bạn hãy gõ
+    - §6若要升级, 获取生成器后输入命令
     - §e/kgenerators upgrade
-    - §6hoặc dùng trong gui máy
+    - §6或打开升级菜单即可进行升级.
     - ''
-    - '§6Giá:'
+    - '§6费用:'
     - <costs>
     slots: 13,22,31
     glow: false
   back:
     enabled: true
     item: ARROW
-    name: §cTrở lại
+    name: §c返回
     lore:
-    - §6Quay lại danh
-    - §6sách máy tái tạo
+    - §6回到&c生成器列表
     slots: '40'
     glow: false
 limits:
-  name: §9Giới hạn
+  name: §9Limits
   slots: 45
   filler:
     enabled: true
@@ -257,7 +251,7 @@ limits:
     item: <limit_display_item>
     name: §a<limit_name>
     lore:
-    - §6Bạn đã đặt §e<amount>§6/§e<limit>§6 giới hạn của máy
+    - §6你已经放置了 §e<amount>§6/§e<limit>§6 个
     - <generators_list>
     - <is_only_owner_use>
     - <is_only_owner_pick_up>
@@ -266,55 +260,53 @@ limits:
   back:
     enabled: true
     item: ARROW
-    name: §cTrở lại
+    name: §c返回
     lore:
-    - §6Quay lại danh
-    - §6sách máy tái tạo
+    - §6回到&c生成器列表
     slots: '40'
     glow: false
 additional-lines:
   recipe:
     menu-how-to:
     - ''
-    - '&6Chuột phải:'
-    - '&Kiểm tra công thức'
+    - '&6右键:'
+    - '&e浏览配方'
   upgrades:
     menu-how-to:
     - ''
-    - '&6Right click:'
-    - '&6Kiểm tra cách nào'
-    - '&eđể nâng cấp'
+    - '&6右键:'
+    - '&e浏览升级方法'
     upgrade-cost:
     - '&8- &7<cost>'
-  generated-object-custom-drops:
-    command:
-      - '&8- &6Lệnh: &e<command>'
-    custom-drops:
-      - ''
-      - '&6Custom drops:'
-      - '&8- &6Rơi từ: &e<custom_drops_source>'
-      - <custom_drops_money>
-      - <custom_drops_exp>
-      - <custom_drops_commands>
-    exp:
-      - '&8- &6Exp: &e<exp> xp'
-    money:
-      - '&8- &6Money: &e<money>'
   generated-object-type:
     item:
-    - '&6Tái tạo: &evật phẩm'
+    - '&6生成: &e物品'
     block:
-    - '&6Tái tạo: &ekhối'
-    custom-drops:
-    - '&6Tái tạo: &ecustom drops'
+    - '&6生成: &e方块'
     entity:
-    - '&6Tái tạo: &econ vật'
+    - '&6生成: &e实体'
+    custom-drops:
+    - '&6生成: &e自定义掉落'
+  generated-object-custom-drops:
+    custom-drops:
+    - ''
+    - '&6自定义掉落:'
+    - '&8- &6掉落自: &e<custom_drops_source>'
+    - <custom_drops_money>
+    - <custom_drops_exp>
+    - <custom_drops_commands>
+    money:
+    - '&8- &6金币: &e<money>'
+    exp:
+    - '&8- &6经验: &e<exp> 点'
+    command:
+    - '&8- &6命令: &e<command>'
   limits:
     generator-list:
     - '&8- &e<generator_name>'
     all-generators:
-    - '&eTất cả máy tái tạo'
+    - '&e所有生成器'
     only-owner-pick-up:
-    - '&cChỉ chủ máy có thể lấy máy'
+    - '&c仅拥有者可拾起该生成器.'
     only-owner-use:
-    - '&cChỉ chủ máy có thể sử dụng máy.'
+    - '&c仅拥有者可以使用.'

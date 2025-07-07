@@ -8,10 +8,12 @@ import lombok.Getter;
 import me.kryniowesegryderiusz.kgenerators.Main;
 import me.kryniowesegryderiusz.kgenerators.dependencies.enums.Dependency;
 import me.kryniowesegryderiusz.kgenerators.dependencies.hooks.BentoBoxHook;
+import me.kryniowesegryderiusz.kgenerators.dependencies.hooks.FancyHologramsHook;
 import me.kryniowesegryderiusz.kgenerators.dependencies.hooks.IridiumSkyblockHook;
 import me.kryniowesegryderiusz.kgenerators.dependencies.hooks.JetsMinionsHook;
 import me.kryniowesegryderiusz.kgenerators.dependencies.hooks.LitMinionsHook;
 import me.kryniowesegryderiusz.kgenerators.dependencies.hooks.MinionsHook;
+import me.kryniowesegryderiusz.kgenerators.dependencies.hooks.PlayerPointsHook;
 import me.kryniowesegryderiusz.kgenerators.dependencies.hooks.SlimefunHook;
 import me.kryniowesegryderiusz.kgenerators.dependencies.hooks.SuperiorSkyblock2Hook;
 import me.kryniowesegryderiusz.kgenerators.dependencies.hooks.VaultHook;
@@ -111,6 +113,11 @@ public class DependenciesManager {
 			Logger.debugPluginLoad("Dependencies: Detected plugin Oraxen. Hooking into it.");
 			dependencies.add(Dependency.ORAXEN);
 		}
+		
+		if (Bukkit.getPluginManager().isPluginEnabled("Nexo")) {
+			Logger.debugPluginLoad("Dependencies: Detected plugin Nexo. Hooking into it.");
+			dependencies.add(Dependency.NEXO);
+		}
 
 		if (Bukkit.getPluginManager().isPluginEnabled("WildStacker")) {
 			Logger.debugPluginLoad("Dependencies: Detected plugin WildStacker. Hooking into it.");
@@ -139,6 +146,12 @@ public class DependenciesManager {
 			Logger.debugPluginLoad("Dependencies: Detected plugin Lands. Hooking into it.");
 			dependencies.add(Dependency.LANDS);
 		}
+		
+		if (Bukkit.getPluginManager().isPluginEnabled("PlayerPoints")) {
+			Logger.debugPluginLoad("Dependencies: Detected plugin PlayerPoints. Hooking into it.");
+			dependencies.add(Dependency.PLAYERPOINTS);
+			PlayerPointsHook.setupPlayerPoints();
+		}
 
 		if (Main.getMultiVersion().getWorldGuardUtils() != null
 				&& Main.getMultiVersion().getWorldGuardUtils().isWorldGuardHooked()) {
@@ -151,12 +164,16 @@ public class DependenciesManager {
 			}
 		}
 
-		if (Bukkit.getPluginManager().isPluginEnabled("HolographicDisplays")) {
-			Logger.debugPluginLoad("Dependencies: Detected plugin HolographicDisplays. Hooked holograms into it.");
-			dependencies.add(Dependency.HOLOGRAPHIC_DISPLAYS);
+		if (Bukkit.getPluginManager().isPluginEnabled("FancyHolograms")) {
+			Logger.debugPluginLoad("Dependencies: Detected plugin FancyHolograms. Hooked holograms into it.");
+			dependencies.add(Dependency.FANCY_HOLOGRAMS);
+			FancyHologramsHook.loadConfigValues();
 		} else if (Bukkit.getPluginManager().isPluginEnabled("DecentHolograms")) {
 			Logger.debugPluginLoad("Dependencies: Detected plugin DecentHolograms. Hooked holograms into it.");
 			dependencies.add(Dependency.DECENT_HOLOGRAMS);
+		} else if (Bukkit.getPluginManager().isPluginEnabled("HolographicDisplays")) {
+			Logger.debugPluginLoad("Dependencies: Detected plugin HolographicDisplays. Hooked holograms into it.");
+			dependencies.add(Dependency.HOLOGRAPHIC_DISPLAYS);
 		} else if (Bukkit.getPluginManager().isPluginEnabled("CMI")) {
 			Logger.debugPluginLoad("Dependencies: Detected plugin CMI. Hooked holograms into it.");
 			dependencies.add(Dependency.CMI_HOLOGRAMS);
@@ -169,6 +186,7 @@ public class DependenciesManager {
 			dependencies.add(Dependency.SUPERIOR_SKYBLOCK_2);
 			SuperiorSkyblock2Hook.setup();
 		}
+
 	}
 
 	public boolean isEnabled(Dependency dep) {
